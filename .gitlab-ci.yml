@@ -1,0 +1,69 @@
+stages:
+  - test
+  - build
+
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - .m2/repository/
+    - sawa-jewelry/.pnpm-store/
+
+# =========================
+# BACKEND - SPRING BOOT
+# =========================
+
+backend_test:
+  stage: test
+  image: maven:3.9-eclipse-temurin-17
+
+  script:
+    - cd mdx_store
+    - mvn -Dmaven.repo.local="$CI_PROJECT_DIR/.m2/repository" test
+
+
+backend_build:
+  stage: build
+  image: maven:3.9-eclipse-temurin-17
+
+  script:
+    - cd mdx_store
+    - mvn -Dmaven.repo.local="$CI_PROJECT_DIR/.m2/repository" clean package -DskipTests
+
+  artifacts:
+    paths:
+      - mdx_store/target/*.jar
+    expire_in: 1 week
+
+# =========================
+# FRONTEND
+# =========================
+
+frontend_test:
+  stage: test
+  image: node:20
+
+  script:
+    - corepack enable
+    - corepack prepare pnpm@9 --activate
+    - cd sawa-jewelry
+    - pnpm config set store-dir "$CI_PROJECT_DIR/sawa-jewelry/.pnpm-store"
+    - pnpm install --frozen-lockfile
+    - pnpm run lint
+
+
+frontend_build:
+  stage: build
+  image: node:20
+
+  script:
+    - corepack enable
+    - corepack prepare pnpm@9 --activate
+    - cd sawa-jewelry
+    - pnpm config set store-dir "$CI_PROJECT_DIR/sawa-jewelry/.pnpm-store"
+    - pnpm install --frozen-lockfile
+    - pnpm run build
+
+  artifacts:
+    paths:
+      - sawa-jewelry/.next/
+    expire_in: 1 week
