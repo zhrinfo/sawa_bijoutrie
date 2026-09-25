@@ -44,7 +44,7 @@ export default function AdminCategoriesPage() {
         router.replace(parsedUser.roles?.includes('ROLE_SOUS_ADMIN') ? '/admin/orders' : '/products')
         return
       }
-      setUser(parsedUser)
+      Promise.resolve().then(() => setUser(parsedUser))
     } catch {
       router.replace('/login')
     }
@@ -52,8 +52,6 @@ export default function AdminCategoriesPage() {
 
   useEffect(() => {
     async function loadCategories() {
-      setLoading(true)
-      setError('')
       const token = window.localStorage.getItem('token')?.replace(/^Bearer\s+/i, '')
 
       try {

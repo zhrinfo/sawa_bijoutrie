@@ -287,26 +287,19 @@ export default function AdminProductsPage() {
       const parsedUser = JSON.parse(storedUser) as AuthUser;
       if (!parsedUser.roles?.includes("ROLE_ADMIN"))
         return router.replace(parsedUser.roles?.includes("ROLE_SOUS_ADMIN") ? "/admin/orders" : "/products");
-      setUser(parsedUser);
+      Promise.resolve().then(() => setUser(parsedUser));
     } catch {
       router.replace("/login");
     }
   }, [router]);
 
   useEffect(() => {
-    if (!selectedProduct) {
-      setProductReviews([]);
-      setReviewsError("");
-      return;
-    }
+    if (!selectedProduct) return;
 
     let isCurrentRequest = true;
     const selectedProductId = selectedProduct.id;
 
     async function loadProductReviews() {
-      setReviewsLoading(true);
-      setReviewsError("");
-
       try {
         const token = window.localStorage
           .getItem("token")
@@ -336,7 +329,13 @@ export default function AdminProductsPage() {
       }
     }
 
-    loadProductReviews();
+    Promise.resolve().then(() => {
+      if (!isCurrentRequest) return;
+      setProductReviews([]);
+      setReviewsLoading(true);
+      setReviewsError("");
+      return loadProductReviews();
+    });
 
     return () => {
       isCurrentRequest = false;

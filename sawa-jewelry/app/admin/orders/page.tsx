@@ -94,15 +94,13 @@ export default function AdminOrdersPage() {
         router.replace('/products')
         return
       }
-      setUser(parsedUser)
+      Promise.resolve().then(() => setUser(parsedUser))
     } catch {
       router.replace('/login')
     }
   }, [router])
 
   async function loadOrders() {
-    setLoading(true)
-    setError('')
     const token = window.localStorage.getItem('token')?.replace(/^Bearer\s+/i, '')
 
     try {
@@ -123,7 +121,7 @@ export default function AdminOrdersPage() {
   }
 
   useEffect(() => {
-    loadOrders()
+    Promise.resolve().then(() => loadOrders())
   }, [])
 
   async function updateOrderStatus(order: Order, nextStatus: string) {

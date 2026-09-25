@@ -36,15 +36,13 @@ export default function AdminSizesPage() {
         router.replace(parsedUser.roles?.includes('ROLE_SOUS_ADMIN') ? '/admin/orders' : '/products')
         return
       }
-      setUser(parsedUser)
+      Promise.resolve().then(() => setUser(parsedUser))
     } catch {
       router.replace('/login')
     }
   }, [router])
 
   async function loadSizes() {
-    setLoading(true)
-    setError('')
     const token = window.localStorage.getItem('token')?.replace(/^Bearer\s+/i, '')
 
     try {
@@ -62,7 +60,7 @@ export default function AdminSizesPage() {
   }
 
   useEffect(() => {
-    loadSizes()
+    Promise.resolve().then(() => loadSizes())
   }, [])
 
   const filteredSizes = useMemo(() => {

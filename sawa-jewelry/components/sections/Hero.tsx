@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowUpRight, ChevronDown, ShoppingBag } from 'lucide-react'
+import { ArrowUpRight, ChevronDown } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { FloatingJewelryScene } from '@/components/FloatingJewelryScene'
 
@@ -68,7 +68,7 @@ export function Hero() {
         <div className="hidden items-center gap-4 text-left text-white/70 sm:flex">
           <span className="font-serif text-2xl italic text-gold">Sawa</span>
           <span className="h-6 w-px bg-white/25" />
-          <span className="font-mono text-[9px] uppercase tracking-[0.25em]">L'art de durer</span>
+          <span className="font-mono text-[9px] uppercase tracking-[0.25em]">L&apos;art de durer</span>
         </div>
         <span className="ml-auto font-mono text-[9px] uppercase tracking-[0.3em] text-white/50">Pièce N° 01 / 26</span>
       </div>

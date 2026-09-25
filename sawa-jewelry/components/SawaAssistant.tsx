@@ -51,8 +51,11 @@ export function SawaAssistant() {
 
   useEffect(() => {
     if (!isOpen || products.length) return
-    setIsLoading(true)
-    fetch(apiUrl)
+    Promise.resolve()
+      .then(() => {
+        setIsLoading(true)
+        return fetch(apiUrl)
+      })
       .then((response) => (response.ok ? response.json() : Promise.reject(new Error('Products unavailable'))))
       .then((data: AssistantProduct[] | { content?: AssistantProduct[] }) => setProducts(Array.isArray(data) ? data : data.content ?? []))
       .catch(() => setProducts([]))

@@ -83,7 +83,7 @@ export default function RegisterPage() {
             <div className="relative flex h-full flex-col justify-between p-10 text-[#fffaf2]">
               <div className="flex items-center gap-3 text-xs uppercase tracking-[0.24em]"><span className="h-px w-8 bg-gold" /> Sawa Bijouterie</div>
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#e2c48b]">L'art de vous révéler</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#e2c48b]">L&apos;art de vous révéler</p>
                 <h2 className="mt-4 max-w-sm font-serif text-6xl leading-[0.88]">Votre histoire mérite de briller.</h2>
                 <p className="mt-6 max-w-xs text-sm leading-relaxed text-white/70">Créez votre espace et composez une collection qui vous ressemble.</p>
               </div>
@@ -94,7 +94,7 @@ export default function RegisterPage() {
             <div className="w-full max-w-md">
           <Link href="/" className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.12em] text-muted-foreground transition-colors hover:text-gold">
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            Retour à l'accueil
+            Retour à l&apos;accueil
           </Link>
           <p className="mt-12 text-xs font-mono uppercase tracking-[0.2em] text-gold">Votre espace SAWA</p>
           <h1 className="mt-3 font-serif text-6xl leading-none text-foreground">Commencez ici.</h1>

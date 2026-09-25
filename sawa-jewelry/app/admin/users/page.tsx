@@ -59,15 +59,13 @@ export default function AdminUsersPage() {
         router.replace(parsedUser.roles?.includes('ROLE_SOUS_ADMIN') ? '/admin/orders' : '/products')
         return
       }
-      setUser(parsedUser)
+      Promise.resolve().then(() => setUser(parsedUser))
     } catch {
       router.replace('/login')
     }
   }, [router])
 
   async function loadUsers() {
-    setLoading(true)
-    setError('')
     const token = window.localStorage.getItem('token')?.replace(/^Bearer\s+/i, '')
 
     try {
@@ -88,7 +86,7 @@ export default function AdminUsersPage() {
   }
 
   useEffect(() => {
-    loadUsers()
+    Promise.resolve().then(() => loadUsers())
   }, [])
 
   async function updateUserRole(userId: number, nextRole: 'ROLE_CLIENT' | 'ROLE_ADMIN' | 'ROLE_SOUS_ADMIN') {

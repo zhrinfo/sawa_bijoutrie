@@ -58,8 +58,6 @@ export default function ProductsPage() {
   useEffect(() => {
     async function loadProducts() {
       try {
-        setIsLoading(true)
-        setError('')
         const response = await fetch(apiUrl)
 
         if (!response.ok) {
@@ -101,13 +99,8 @@ export default function ProductsPage() {
   }, [products, category, search, sort])
 
   const pageCount = Math.max(1, Math.ceil(filteredProducts.length / productsPerPage))
-  const visibleProducts = filteredProducts.slice((page - 1) * productsPerPage, page * productsPerPage)
-
-  useEffect(() => {
-    if (page > pageCount) {
-      setPage(pageCount)
-    }
-  }, [page, pageCount])
+  const currentPage = Math.min(page, pageCount)
+  const visibleProducts = filteredProducts.slice((currentPage - 1) * productsPerPage, currentPage * productsPerPage)
 
   function changeCategory(nextCategory: string) {
     setCategory(nextCategory)
@@ -125,7 +118,7 @@ export default function ProductsPage() {
   }
 
   const pageLabel = filteredProducts.length
-    ? `${Math.min((page - 1) * productsPerPage + 1, filteredProducts.length)}-${Math.min(page * productsPerPage, filteredProducts.length)}`
+    ? `${Math.min((currentPage - 1) * productsPerPage + 1, filteredProducts.length)}-${Math.min(currentPage * productsPerPage, filteredProducts.length)}`
     : '0-0'
 
   return (
@@ -328,7 +321,7 @@ export default function ProductsPage() {
                   <button
                     type="button"
                     aria-label="Previous page"
-                    disabled={page === 1}
+                    disabled={currentPage === 1}
                     onClick={() => setPage((currentPage) => currentPage - 1)}
                     className="rounded-full border border-[#eadfc7] bg-white/80 p-3 text-foreground shadow-sm transition-all duration-300 hover:border-gold hover:text-gold disabled:cursor-not-allowed disabled:opacity-30"
                   >
@@ -337,7 +330,7 @@ export default function ProductsPage() {
 
                   <div className="flex items-center gap-2 rounded-full border border-[#eadfc7] bg-white/80 px-4 py-2 shadow-sm">
                     <span className="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Page</span>
-                    <span className="font-mono text-sm font-semibold text-foreground">{page}</span>
+                    <span className="font-mono text-sm font-semibold text-foreground">{currentPage}</span>
                     <span className="text-muted-foreground">/</span>
                     <span className="font-mono text-sm text-muted-foreground">{pageCount}</span>
                   </div>
@@ -345,7 +338,7 @@ export default function ProductsPage() {
                   <button
                     type="button"
                     aria-label="Next page"
-                    disabled={page === pageCount}
+                    disabled={currentPage === pageCount}
                     onClick={() => setPage((currentPage) => currentPage + 1)}
                     className="rounded-full border border-[#eadfc7] bg-white/80 p-3 text-foreground shadow-sm transition-all duration-300 hover:border-gold hover:text-gold disabled:cursor-not-allowed disabled:opacity-30"
                   >
