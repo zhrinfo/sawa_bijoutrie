@@ -1,0 +1,4 @@
+allowBuilds:
+  msw: set this to true or false
+minimumReleaseAgeExclude:
+  - three@0.186.1
