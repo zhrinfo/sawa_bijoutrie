@@ -1,12 +1,12 @@
 stages:
-  - test
   - build
+  - test
 
 cache:
   key: "$CI_COMMIT_REF_SLUG"
   paths:
     - .m2/repository/
-    - sawa-jewelry/.pnpm-store/
+    - .npm/
 
 # =========================
 # BACKEND - SPRING BOOT
@@ -43,12 +43,9 @@ frontend_test:
   image: node:20
 
   script:
-    - corepack enable
-    - corepack prepare pnpm@9 --activate
     - cd sawa-jewelry
-    - pnpm config set store-dir "$CI_PROJECT_DIR/sawa-jewelry/.pnpm-store"
-    - pnpm install --frozen-lockfile
-    - pnpm run lint
+    - npm ci --cache "$CI_PROJECT_DIR/.npm"
+    - npm run lint
 
 
 frontend_build:
@@ -56,12 +53,9 @@ frontend_build:
   image: node:20
 
   script:
-    - corepack enable
-    - corepack prepare pnpm@9 --activate
     - cd sawa-jewelry
-    - pnpm config set store-dir "$CI_PROJECT_DIR/sawa-jewelry/.pnpm-store"
-    - pnpm install --frozen-lockfile
-    - pnpm run build
+    - npm ci --cache "$CI_PROJECT_DIR/.npm"
+    - npm run build
 
   artifacts:
     paths:
