@@ -53,7 +53,7 @@ export default function AdminSizesPage() {
       const data = await response.json()
       setSizes((Array.isArray(data) ? data : (data.content ?? data.data ?? [])) as Size[])
     } catch (loadError) {
-      setError(loadError instanceof Error ? loadError.message : 'Une erreur est survenue.')
+      setError(loadError instanceof Error ? loadError.message : 'Un erreur est survenue.')
     } finally {
       setLoading(false)
     }
