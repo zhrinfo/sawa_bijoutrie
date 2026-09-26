@@ -87,6 +87,6 @@ frontend_sonarqube:
     - frontend_test
   script:
     - cd sawa-jewelry
-    - sonar-scanner -Dsonar.projectKey="$SONAR_FRONTEND_PROJECT_KEY" -Dsonar.host.url="$SONAR_HOST_URL" -Dsonar.organization="$SONAR_ORGANIZATION" -Dsonar.token="$SONAR_TOKEN" -Dsonar.qualitygate.wait=true
+    - sonar-scanner -Dsonar.projectKey="$SONAR_FRONTEND_PROJECT_KEY" -Dsonar.host.url="$SONAR_HOST_URL" -Dsonar.organization="$SONAR_ORGANIZATION" -Dsonar.token="$SONAR_FRONTEND_TOKEN" -Dsonar.qualitygate.wait=true
   rules:
-    - if: '$SONAR_HOST_URL && $SONAR_TOKEN && $SONAR_ORGANIZATION && $SONAR_FRONTEND_PROJECT_KEY'
+    - if: '$SONAR_HOST_URL && $SONAR_FRONTEND_TOKEN && $SONAR_ORGANIZATION && $SONAR_FRONTEND_PROJECT_KEY'
