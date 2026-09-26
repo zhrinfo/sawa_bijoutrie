@@ -14,7 +14,6 @@ import com.techshop.repository.CategoryRepository;
 import com.techshop.repository.ColorRepository;
 import com.techshop.repository.ProductRepository;
 import com.techshop.repository.SizeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,17 +26,18 @@ import java.util.Objects;
 @Service
 @Transactional
 public class ProductService {
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
+    private final SizeRepository sizeRepository;
+    private final ColorRepository colorRepository;
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-
-    @Autowired
-    private SizeRepository sizeRepository;
-
-    @Autowired
-    private ColorRepository colorRepository;
+    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository,
+                          SizeRepository sizeRepository, ColorRepository colorRepository) {
+        this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
+        this.sizeRepository = sizeRepository;
+        this.colorRepository = colorRepository;
+    }
 
     public Page<ProductResponseDTO> getAllProducts(int page, int size, String sortBy, String direction, String search) {
         Sort sort = direction.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();

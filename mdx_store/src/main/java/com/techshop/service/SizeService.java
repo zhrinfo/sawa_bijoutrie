@@ -3,15 +3,17 @@ package com.techshop.service;
 import com.techshop.dto.SizeDTO;
 import com.techshop.entity.Size;
 import com.techshop.repository.SizeRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class SizeService {
-    @Autowired
-    private SizeRepository sizeRepository;
+    private final SizeRepository sizeRepository;
+
+    public SizeService(SizeRepository sizeRepository) {
+        this.sizeRepository = sizeRepository;
+    }
 
     public List<SizeDTO> getAll() {
         return sizeRepository.findAll().stream().map(SizeDTO::from).toList();

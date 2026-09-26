@@ -5,7 +5,6 @@ import com.techshop.dto.OrderRequest;
 import com.techshop.dto.OrderStatusUpdateRequest;
 import com.techshop.entity.Order;
 import com.techshop.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,8 +16,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
+
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @PostMapping("/checkout")
     @PreAuthorize("hasAnyAuthority('ROLE_CLIENT','ROLE_ADMIN')")

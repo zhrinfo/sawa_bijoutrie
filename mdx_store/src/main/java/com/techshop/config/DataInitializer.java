@@ -5,7 +5,6 @@ import com.techshop.entity.Role;
 import com.techshop.entity.User;
 import com.techshop.repository.RoleRepository;
 import com.techshop.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -15,15 +14,15 @@ import java.util.Set;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
+    private final RoleRepository roleRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
 
-    @Autowired
-    RoleRepository roleRepository;
-
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    PasswordEncoder encoder;
+    public DataInitializer(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoder encoder) {
+        this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
+        this.encoder = encoder;
+    }
 
     @Override
     public void run(String... args) throws Exception {

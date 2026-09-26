@@ -3,15 +3,17 @@ package com.techshop.service;
 import com.techshop.dto.ColorDTO;
 import com.techshop.entity.Color;
 import com.techshop.repository.ColorRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ColorService {
-    @Autowired
-    private ColorRepository colorRepository;
+    private final ColorRepository colorRepository;
+
+    public ColorService(ColorRepository colorRepository) {
+        this.colorRepository = colorRepository;
+    }
 
     public List<ColorDTO> getAll() {
         return colorRepository.findAll().stream().map(ColorDTO::from).toList();

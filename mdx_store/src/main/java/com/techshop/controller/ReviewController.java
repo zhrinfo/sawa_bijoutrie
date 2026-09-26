@@ -4,7 +4,6 @@ import com.techshop.dto.ReviewRequest;
 import com.techshop.dto.ReviewResponse;
 import com.techshop.service.ReviewService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,8 +23,11 @@ import java.util.List;
 @RequestMapping("/api/reviews")
 @CrossOrigin(origins = "*")
 public class ReviewController {
-    @Autowired
-    private ReviewService reviewService;
+    private final ReviewService reviewService;
+
+    public ReviewController(ReviewService reviewService) {
+        this.reviewService = reviewService;
+    }
 
     @GetMapping("/product/{productId}")
     public ResponseEntity<List<ReviewResponse>> getProductReviews(@PathVariable Long productId) {

@@ -3,7 +3,6 @@ package com.techshop.controller;
 import com.techshop.dto.CartItemRequest;
 import com.techshop.dto.CartResponse;
 import com.techshop.service.CartService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -20,8 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/cart")
 @PreAuthorize("hasAnyAuthority('ROLE_CLIENT','ROLE_ADMIN','ROLE_SOUS_ADMIN')")
 public class CartController {
-    @Autowired
-    private CartService cartService;
+    private final CartService cartService;
+
+    public CartController(CartService cartService) {
+        this.cartService = cartService;
+    }
 
     @GetMapping
     public ResponseEntity<CartResponse> getCart(Authentication authentication) {

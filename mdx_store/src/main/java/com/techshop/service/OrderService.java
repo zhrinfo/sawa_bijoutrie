@@ -8,7 +8,6 @@ import com.techshop.repository.CartRepository;
 import com.techshop.repository.DeliveryAddressRepository;
 import com.techshop.repository.ProductRepository;
 import com.techshop.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,18 +19,23 @@ import java.util.Objects;
 
 @Service
 public class OrderService {
-    @Autowired
-    private OrderRepository orderRepository;
-    @Autowired
-    private CartRepository cartRepository;
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private DeliveryAddressRepository deliveryAddressRepository;
-    @Autowired
-    private EmailService emailService;
+    private final OrderRepository orderRepository;
+    private final CartRepository cartRepository;
+    private final ProductRepository productRepository;
+    private final UserRepository userRepository;
+    private final DeliveryAddressRepository deliveryAddressRepository;
+    private final EmailService emailService;
+
+    public OrderService(OrderRepository orderRepository, CartRepository cartRepository,
+                        ProductRepository productRepository, UserRepository userRepository,
+                        DeliveryAddressRepository deliveryAddressRepository, EmailService emailService) {
+        this.orderRepository = orderRepository;
+        this.cartRepository = cartRepository;
+        this.productRepository = productRepository;
+        this.userRepository = userRepository;
+        this.deliveryAddressRepository = deliveryAddressRepository;
+        this.emailService = emailService;
+    }
 
     @Transactional
     public Order placeOrder(OrderRequest request, String userEmail) {

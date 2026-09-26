@@ -2,7 +2,6 @@ package com.techshop.controller;
 
 import com.techshop.entity.DeliveryAddress;
 import com.techshop.repository.DeliveryAddressRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,8 +20,11 @@ import java.util.List;
 @RequestMapping("/api/delivery-addresses")
 @CrossOrigin(origins = "*")
 public class DeliveryAddressController {
-    @Autowired
-    private DeliveryAddressRepository deliveryAddressRepository;
+    private final DeliveryAddressRepository deliveryAddressRepository;
+
+    public DeliveryAddressController(DeliveryAddressRepository deliveryAddressRepository) {
+        this.deliveryAddressRepository = deliveryAddressRepository;
+    }
 
     @GetMapping
     public ResponseEntity<List<DeliveryAddress>> getAll() {

@@ -2,7 +2,6 @@ package com.techshop.controller;
 
 import com.techshop.dto.ColorDTO;
 import com.techshop.service.ColorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +12,11 @@ import java.util.List;
 @RequestMapping("/api/colors")
 @CrossOrigin(origins = "*")
 public class ColorController {
-    @Autowired
-    private ColorService colorService;
+    private final ColorService colorService;
+
+    public ColorController(ColorService colorService) {
+        this.colorService = colorService;
+    }
 
     @GetMapping
     public ResponseEntity<List<ColorDTO>> getAll() {

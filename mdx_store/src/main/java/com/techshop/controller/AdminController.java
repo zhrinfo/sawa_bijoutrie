@@ -16,7 +16,6 @@ import com.techshop.repository.RoleRepository;
 import com.techshop.repository.UserRepository;
 import jakarta.validation.Valid;
 import com.techshop.dto.OrderHistoryResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,18 +26,23 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/admin")
 public class AdminController {
-    @Autowired
-    private OrderRepository orderRepository;
-    @Autowired
-    private OrderItemRepository orderItemRepository;
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private ProductSizeRepository productSizeRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private RoleRepository roleRepository;
+    private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
+    private final ProductRepository productRepository;
+    private final ProductSizeRepository productSizeRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+
+    public AdminController(OrderRepository orderRepository, OrderItemRepository orderItemRepository,
+                           ProductRepository productRepository, ProductSizeRepository productSizeRepository,
+                           UserRepository userRepository, RoleRepository roleRepository) {
+        this.orderRepository = orderRepository;
+        this.orderItemRepository = orderItemRepository;
+        this.productRepository = productRepository;
+        this.productSizeRepository = productSizeRepository;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+    }
 
     @GetMapping("/stats")
     public ResponseEntity<AdminStatsDTO> getDashboardStats() {
