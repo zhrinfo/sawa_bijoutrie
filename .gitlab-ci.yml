@@ -74,19 +74,19 @@ backend_sonarqube:
     - backend_test
   script:
     - cd mdx_store
-    - mvn -Dmaven.repo.local="$CI_PROJECT_DIR/.m2/repository" clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey="$SONAR_BACKEND_PROJECT_KEY" -Dsonar.host.url="$SONAR_HOST_URL" -Dsonar.token="$SONAR_TOKEN" -Dsonar.qualitygate.wait=true
+    - mvn -Dmaven.repo.local="$CI_PROJECT_DIR/.m2/repository" clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey="$SONAR_BACKEND_PROJECT_KEY" -Dsonar.organization="$SONAR_ORGANIZATION" -Dsonar.host.url="$SONAR_HOST_URL" -Dsonar.token="$SONAR_TOKEN" -Dsonar.qualitygate.wait=true
   rules:
     - if: '$SONAR_HOST_URL && $SONAR_TOKEN && $SONAR_BACKEND_PROJECT_KEY'
 
 frontend_sonarqube:
   stage: quality
   image:
-    name: sonarsource/sonar-scanner-cli:6.2.1:latest
+    name: sonarsource/sonar-scanner-cli:latest
     entrypoint: [""]
   needs:
     - frontend_test
   script:
     - cd sawa-jewelry
-    - sonar-scanner -Dsonar.projectKey="$SONAR_FRONTEND_PROJECT_KEY" -Dsonar.host.url="$SONAR_HOST_URL" -Dsonar.token="$SONAR_TOKEN" -Dsonar.qualitygate.wait=true
+    - sonar-scanner -Dsonar.projectKey="$SONAR_FRONTEND_PROJECT_KEY" -Dsonar.host.url="$SONAR_HOST_URL" -Dsonar.organization="$SONAR_ORGANIZATION" -Dsonar.token="$SONAR_TOKEN" -Dsonar.qualitygate.wait=true
   rules:
     - if: '$SONAR_HOST_URL && $SONAR_TOKEN && $SONAR_FRONTEND_PROJECT_KEY'
