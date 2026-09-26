@@ -81,7 +81,7 @@ backend_sonarqube:
 frontend_sonarqube:
   stage: quality
   image:
-    name: sonarsource/sonar-scanner-cli:6.2.1
+    name: sonarsource/sonar-scanner-cli:6.2.1:latest
     entrypoint: [""]
   needs:
     - frontend_test
